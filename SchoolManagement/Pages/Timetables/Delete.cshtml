@@ -1,0 +1,58 @@
+@page
+@model SchoolManagement.Pages_Timetables.DeleteModel
+
+@{
+    ViewData["Title"] = "Xóa Thời khóa biểu";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-trash-can me-2 text-danger"></i>Xóa Thời Khóa Biểu</h2>
+    <a asp-page="Index" class="btn btn-outline-secondary shadow-sm"><i class="fa-solid fa-arrow-left me-1"></i>Trở về</a>
+</div>
+
+<div class="alert alert-danger shadow-sm d-flex align-items-center mb-4" role="alert">
+    <i class="fa-solid fa-triangle-exclamation fs-3 me-3"></i>
+    <div>
+        <h4 class="alert-heading fw-bold mb-1">Cảnh báo!</h4>
+        <p class="mb-0">Bạn có chắc chắn muốn xóa Lịch học này khỏi hệ thống không? Hành động này không thể hoàn tác.</p>
+    </div>
+</div>
+
+<div class="card shadow-sm border-danger mb-4">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 border-end">
+                <dl class="row mb-0">
+                    <dt class="col-sm-5 text-muted"><i class="fa-solid fa-layer-group me-2"></i>Học Kỳ</dt>
+                    <dd class="col-sm-7 fw-semibold">@Model.Timetable.Semester</dd>
+
+                    <dt class="col-sm-5 text-muted mt-3"><i class="fa-solid fa-school me-2"></i>Lớp Học</dt>
+                    <dd class="col-sm-7 fw-semibold text-primary mt-3">@Model.Timetable.Class?.Name</dd>
+                    
+                    <dt class="col-sm-5 text-muted mt-3"><i class="fa-solid fa-book me-2"></i>Môn Học</dt>
+                    <dd class="col-sm-7 fw-semibold mt-3"><span class="badge bg-info text-dark">@Model.Timetable.Subject?.Name</span></dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                 <dl class="row mb-0">
+                    <dt class="col-sm-5 text-muted"><i class="fa-solid fa-chalkboard-user me-2"></i>Giáo Viên</dt>
+                    <dd class="col-sm-7 fw-semibold">@Model.Timetable.Teacher?.FullName</dd>
+
+                    <dt class="col-sm-5 text-muted mt-3"><i class="fa-solid fa-calendar-day me-2"></i>Thứ</dt>
+                    <dd class="col-sm-7 fw-semibold text-danger mt-3">Thứ @Model.Timetable.DayOfWeek</dd>
+                    
+                    <dt class="col-sm-5 text-muted mt-3"><i class="fa-solid fa-clock me-2"></i>Tiết Học</dt>
+                    <dd class="col-sm-7 fw-semibold mt-3">Tiết @Model.Timetable.Period</dd>
+                </dl>
+            </div>
+        </div>
+        
+        <hr class="my-4">
+        
+        <form method="post" class="d-flex justify-content-end">
+            <input type="hidden" asp-for="Timetable.Id" />
+            <a asp-page="./Index" class="btn btn-secondary me-2">Hủy Bỏ</a>
+            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash-can me-2"></i>Xóa Lịch Học</button>
+        </form>
+    </div>
+</div>

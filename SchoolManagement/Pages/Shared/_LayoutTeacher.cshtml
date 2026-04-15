@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Giáo Viên</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        /* === TEACHER LAYOUT — GREEN THEME === */
+        #sidebar-wrapper {
+            background: linear-gradient(180deg, #1b5e20 0%, #2e7d32 60%, #388e3c 100%) !important;
+            border-right: none !important;
+        }
+        .sidebar-heading {
+            color: #fff !important;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            padding-bottom: 1rem !important;
+        }
+        .sidebar-section-title {
+            color: rgba(255,255,255,0.45);
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 0.75rem 1rem 0.25rem;
+        }
+        .sidebar-nav-link {
+            color: rgba(255,255,255,0.78) !important;
+            border-radius: 0.5rem !important;
+            margin-bottom: 2px;
+            font-weight: 500;
+            transition: all 0.18s ease;
+            background: transparent !important;
+            border: none !important;
+            padding: 0.6rem 1rem;
+        }
+        .sidebar-nav-link:hover {
+            color: #fff !important;
+            background: rgba(255,255,255,0.13) !important;
+        }
+        .sidebar-nav-link.active {
+            color: #fff !important;
+            background: rgba(255,255,255,0.2) !important;
+            font-weight: 600;
+        }
+        #page-content-wrapper { background-color: #f0f5f1; }
+        .top-navbar { background: #fff !important; border-bottom: 1px solid #d4e8d8 !important; }
+        .role-badge-teacher {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+            color: white;
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 99px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Teacher Sidebar -->
+        <div id="sidebar-wrapper">
+            <div class="sidebar-heading text-center py-4">
+                <div style="font-size:1.5rem; font-weight:700; color:#fff;">
+                    <i class="fa-solid fa-chalkboard-user me-2" style="color:#a5d6a7;"></i>SchoolMgr
+                </div>
+                <div style="font-size:0.7rem; color:rgba(255,255,255,0.5); letter-spacing:0.1em; margin-top:4px;">GIÁO VIÊN</div>
+            </div>
+
+            <div class="px-2 pb-3">
+                <a asp-page="/Teacher/Dashboard" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString()!.StartsWith("/Teacher") == true ? "active" : "")">
+                    <i class="fa-solid fa-house me-3"></i>Trang Chủ
+                </a>
+
+                <div class="sidebar-section-title mt-2">Quản lý lớp học</div>
+                <a asp-page="/Students/Index" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString()!.StartsWith("/Students") == true ? "active" : "")">
+                    <i class="fa-solid fa-user-graduate me-3"></i>Học Sinh
+                </a>
+                <a asp-page="/Classes/Index" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString()!.StartsWith("/Classes") == true ? "active" : "")">
+                    <i class="fa-solid fa-school me-3"></i>Lớp Học
+                </a>
+                <a asp-page="/Subjects/Index" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString()!.StartsWith("/Subjects") == true ? "active" : "")">
+                    <i class="fa-solid fa-book me-3"></i>Môn Học
+                </a>
+
+                <div class="sidebar-section-title mt-2">Lịch & Kết quả</div>
+                <a asp-page="/Timetables/Index" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString()!.StartsWith("/Timetables") == true ? "active" : "")">
+                    <i class="fa-solid fa-calendar-days me-3"></i>Thời Khóa Biểu
+                </a>
+                <a asp-page="/Grades/Index" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString()!.StartsWith("/Grades") == true ? "active" : "")">
+                    <i class="fa-solid fa-clipboard-check me-3"></i>Điểm / Kết Quả
+                </a>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" class="w-100">
+            <nav class="navbar top-navbar navbar-expand-lg py-2">
+                <div class="container-fluid">
+                    <button class="btn btn-sm btn-light border" id="sidebarToggle">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0 align-items-center gap-2">
+                            <li class="nav-item">
+                                <span class="role-badge-teacher"><i class="fa-solid fa-chalkboard-user me-1"></i>Giáo Viên</span>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown">
+                                    <div class="rounded-circle text-white d-flex align-items-center justify-content-center me-2 fw-bold"
+                                         style="width:34px;height:34px;background:linear-gradient(135deg,#1b5e20,#388e3c);font-size:1rem;">
+                                        @(User.Identity?.Name?.Substring(0, 1).ToUpper() ?? "T")
+                                    </div>
+                                    <span class="fw-semibold">@(User.Identity?.Name ?? "Giáo viên")</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end shadow border-0">
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" asp-page="/Account/Logout">
+                                        <i class="fa-solid fa-right-from-bracket me-2"></i>Đăng xuất
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-fluid px-4 py-4">
+                <main role="main">@RenderBody()</main>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', event => {
+            const sidebarToggle = document.body.querySelector('#sidebarToggle');
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', event => {
+                    event.preventDefault();
+                    document.body.classList.toggle('sb-sidenav-toggled');
+                    localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+                });
+            }
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

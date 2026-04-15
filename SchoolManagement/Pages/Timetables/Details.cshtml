@@ -1,0 +1,45 @@
+@page
+@model SchoolManagement.Pages_Timetables.DetailsModel
+
+@{
+    ViewData["Title"] = "Chi tiết Thời khóa biểu";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-eye me-2 text-primary"></i>Chi Tiết Thời Khóa Biểu</h2>
+    <div>
+        <a asp-page="./Edit" asp-route-id="@Model.Timetable?.Id" class="btn btn-primary shadow-sm me-2"><i class="fa-solid fa-pen-to-square me-1"></i>Sửa</a>
+        <a asp-page="./Index" class="btn btn-outline-secondary shadow-sm"><i class="fa-solid fa-arrow-left me-1"></i>Trở về</a>
+    </div>
+</div>
+
+<div class="card shadow-sm col-md-8">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 border-end">
+                <dl class="row mb-0">
+                    <dt class="col-sm-5 text-muted"><i class="fa-solid fa-layer-group me-2"></i>Học Kỳ</dt>
+                    <dd class="col-sm-7 fw-semibold">@Model.Timetable.Semester</dd>
+
+                    <dt class="col-sm-5 text-muted mt-3"><i class="fa-solid fa-school me-2"></i>Lớp Học</dt>
+                    <dd class="col-sm-7 fw-semibold text-primary mt-3">@Model.Timetable.Class?.Name</dd>
+                    
+                    <dt class="col-sm-5 text-muted mt-3"><i class="fa-solid fa-book me-2"></i>Môn Học</dt>
+                    <dd class="col-sm-7 fw-semibold mt-3"><span class="badge bg-info text-dark">@Model.Timetable.Subject?.Name</span></dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                 <dl class="row mb-0">
+                    <dt class="col-sm-5 text-muted"><i class="fa-solid fa-chalkboard-user me-2"></i>Giáo Viên</dt>
+                    <dd class="col-sm-7 fw-semibold">@Model.Timetable.Teacher?.FullName</dd>
+
+                    <dt class="col-sm-5 text-muted mt-3"><i class="fa-solid fa-calendar-day me-2"></i>Thứ</dt>
+                    <dd class="col-sm-7 fw-semibold text-danger mt-3">Thứ @Model.Timetable.DayOfWeek</dd>
+                    
+                    <dt class="col-sm-5 text-muted mt-3"><i class="fa-solid fa-clock me-2"></i>Tiết Học</dt>
+                    <dd class="col-sm-7 fw-semibold mt-3">Tiết @Model.Timetable.Period</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

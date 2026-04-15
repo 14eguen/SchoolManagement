@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SchoolManager Admin</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        /* === ADMIN LAYOUT — INDIGO/BLUE THEME === */
+        #sidebar-wrapper {
+            background: linear-gradient(180deg, #1a237e 0%, #283593 60%, #3949ab 100%) !important;
+            border-right: none !important;
+        }
+        .sidebar-heading {
+            color: #fff !important;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            padding-bottom: 1rem !important;
+        }
+        .sidebar-section-title {
+            color: rgba(255,255,255,0.45);
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 0.75rem 1rem 0.25rem;
+        }
+        .sidebar-nav-link {
+            color: rgba(255,255,255,0.75) !important;
+            border-radius: 0.5rem !important;
+            margin-bottom: 2px;
+            font-weight: 500;
+            transition: all 0.18s ease;
+            background: transparent !important;
+            border: none !important;
+            padding: 0.6rem 1rem;
+        }
+        .sidebar-nav-link:hover {
+            color: #fff !important;
+            background: rgba(255,255,255,0.13) !important;
+        }
+        .sidebar-nav-link.active {
+            color: #fff !important;
+            background: rgba(255,255,255,0.2) !important;
+            font-weight: 600;
+        }
+        #page-content-wrapper { background-color: #f0f2f8; }
+        .top-navbar { background: #fff !important; border-bottom: 1px solid #e3e8f0 !important; }
+        .role-badge-admin {
+            background: linear-gradient(135deg, #e53935, #c62828);
+            color: white;
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 99px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Admin Sidebar -->
+        <div id="sidebar-wrapper">
+            <div class="sidebar-heading text-center py-4">
+                <div style="font-size:1.5rem; font-weight:700; color:#fff;">
+                    <i class="fa-solid fa-graduation-cap me-2" style="color:#90caf9;"></i>SchoolMgr
+                </div>
+                <div style="font-size:0.7rem; color:rgba(255,255,255,0.5); letter-spacing:0.1em; margin-top:4px;">QUẢN TRỊ HỆ THỐNG</div>
+            </div>
+
+            <div class="px-2 pb-3">
+                <a asp-page="/Index" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString() == "/Index" ? "active" : "")">
+                    <i class="fa-solid fa-house me-3"></i>Trang Chủ
+                </a>
+
+                <div class="sidebar-section-title mt-2">Quản lý hệ thống</div>
+                <a asp-page="/Users/Index" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString()!.StartsWith("/Users") == true ? "active" : "")">
+                    <i class="fa-solid fa-users-gear me-3"></i>Người Dùng
+                </a>
+                <a asp-page="/Teachers/Index" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString()!.StartsWith("/Teachers") == true ? "active" : "")">
+                    <i class="fa-solid fa-chalkboard-user me-3"></i>Giáo Viên
+                </a>
+                <a asp-page="/Students/Index" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString()!.StartsWith("/Students") == true ? "active" : "")">
+                    <i class="fa-solid fa-user-graduate me-3"></i>Học Sinh
+                </a>
+
+                <div class="sidebar-section-title mt-2">Đào tạo</div>
+                <a asp-page="/Classes/Index" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString()!.StartsWith("/Classes") == true ? "active" : "")">
+                    <i class="fa-solid fa-school me-3"></i>Lớp Học
+                </a>
+                <a asp-page="/Subjects/Index" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString()!.StartsWith("/Subjects") == true ? "active" : "")">
+                    <i class="fa-solid fa-book me-3"></i>Môn Học
+                </a>
+                <a asp-page="/Timetables/Index" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString()!.StartsWith("/Timetables") == true ? "active" : "")">
+                    <i class="fa-solid fa-calendar-days me-3"></i>Thời Khóa Biểu
+                </a>
+
+                <div class="sidebar-section-title mt-2">Đánh giá</div>
+                <a asp-page="/Grades/Index" class="list-group-item list-group-item-action sidebar-nav-link @(ViewContext.RouteData.Values["Page"]?.ToString()!.StartsWith("/Grades") == true ? "active" : "")">
+                    <i class="fa-solid fa-clipboard-check me-3"></i>Điểm / Kết Quả
+                </a>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" class="w-100">
+            <nav class="navbar top-navbar navbar-expand-lg py-2">
+                <div class="container-fluid">
+                    <button class="btn btn-sm btn-light border" id="sidebarToggle">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0 align-items-center gap-2">
+                            <li class="nav-item">
+                                <span class="role-badge-admin"><i class="fa-solid fa-shield-halved me-1"></i>Admin</span>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle d-flex align-items-center" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown">
+                                    <div class="rounded-circle text-white d-flex align-items-center justify-content-center me-2 fw-bold"
+                                         style="width:34px;height:34px;background:linear-gradient(135deg,#1a237e,#3949ab);font-size:1rem;">
+                                        @(User.Identity?.Name?.Substring(0, 1).ToUpper() ?? "A")
+                                    </div>
+                                    <span class="fw-semibold">@(User.Identity?.Name ?? "Admin")</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end shadow border-0">
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" asp-page="/Account/Logout">
+                                        <i class="fa-solid fa-right-from-bracket me-2"></i>Đăng xuất
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-fluid px-4 py-4">
+                <main role="main">@RenderBody()</main>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', event => {
+            const sidebarToggle = document.body.querySelector('#sidebarToggle');
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', event => {
+                    event.preventDefault();
+                    document.body.classList.toggle('sb-sidenav-toggled');
+                    localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+                });
+            }
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

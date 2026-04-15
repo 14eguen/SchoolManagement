@@ -1,0 +1,26 @@
+@page
+@model SchoolManagement.Pages_Subjects.DetailsModel
+
+@{
+    ViewData["Title"] = "Chi tiết Môn học";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-eye me-2 text-primary"></i>Chi tiết Môn học</h2>
+    <div>
+        <a asp-page="./Edit" asp-route-id="@Model.Subject?.Id" class="btn btn-primary shadow-sm me-2"><i class="fa-solid fa-pen-to-square me-1"></i>Sửa</a>
+        <a asp-page="./Index" class="btn btn-outline-secondary shadow-sm"><i class="fa-solid fa-arrow-left me-1"></i>Trở về</a>
+    </div>
+</div>
+
+<div class="card shadow-sm col-md-8">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-4 text-muted">Tên Môn Học</dt>
+            <dd class="col-sm-8 fw-semibold">@Html.DisplayFor(model => model.Subject.Name)</dd>
+
+            <dt class="col-sm-4 text-muted mt-3">Hệ Số</dt>
+            <dd class="col-sm-8 fw-semibold mt-3">@Html.DisplayFor(model => model.Subject.Coefficient)</dd>
+        </dl>
+    </div>
+</div>

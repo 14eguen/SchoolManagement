@@ -1,0 +1,156 @@
+@page
+@model SchoolManagement.Pages.Student.DashboardModel
+@{
+    ViewData["Title"] = "Học Tập Của Tôi";
+}
+
+<style>
+    .stat-card { border:none; border-radius:0.75rem; transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow:0 0.15rem 1.75rem rgba(58,59,69,0.1); }
+    .stat-card:hover { transform:translateY(-4px); box-shadow:0 0.5rem 2rem rgba(58,59,69,0.18); }
+    .icon-circle { height:3.2rem; width:3.2rem; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:1.4rem; }
+    .timetable-day-badge { width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.75rem; background:linear-gradient(135deg,#6a1b9a,#7b1fa2); color:#fff; flex-shrink:0;}
+</style>
+
+<!-- Welcome Banner -->
+<div class="rounded-4 p-4 mb-5 text-white position-relative overflow-hidden"
+     style="background: linear-gradient(135deg, #4a148c, #7b1fa2); box-shadow:0 8px 32px rgba(106,27,154,0.35);">
+    <h1 class="fw-bold mb-1" style="font-size:1.8rem;">Xin chào, @Model.StudentFullName! 📚</h1>
+    <p class="mb-0 opacity-75">Lớp: <strong>@Model.ClassName</strong> &nbsp;|&nbsp; Chào mừng bạn đến với cổng học tập cá nhân của mình.</p>
+    <i class="fa-solid fa-user-graduate position-absolute" style="right:-20px;bottom:-30px;font-size:10rem;opacity:0.08;"></i>
+</div>
+
+<!-- Stats Row -->
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card stat-card h-100 py-2" style="border-left: 4px solid #6a1b9a !important;">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-uppercase fw-bold mb-1" style="font-size:0.75rem; color:#6a1b9a;">Lớp Học</div>
+                    <div class="h4 fw-bold mb-1">@Model.ClassName</div>
+                    <div class="text-muted small">Lớp học của bạn</div>
+                </div>
+                <div class="icon-circle" style="background:rgba(106,27,154,0.12); color:#6a1b9a;">
+                    <i class="fa-solid fa-school"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card h-100 py-2" style="border-left: 4px solid #0277bd !important;">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-uppercase fw-bold text-primary mb-1" style="font-size:0.75rem;">Số Tiết Học</div>
+                    <div class="h2 fw-bold mb-1">@Model.TimetableCount</div>
+                    <div class="text-muted small">Tiết học trong tuần</div>
+                </div>
+                <div class="icon-circle" style="background:rgba(2,119,189,0.1); color:#0277bd;">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card h-100 py-2" style="border-left: 4px solid #00695c !important;">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="text-uppercase fw-bold mb-1" style="font-size:0.75rem; color:#00695c;">Điểm Đã Nhập</div>
+                    <div class="h2 fw-bold mb-1">@Model.GradeCount</div>
+                    <div class="text-muted small">Môn đã có điểm</div>
+                </div>
+                <div class="icon-circle" style="background:rgba(0,105,92,0.1); color:#00695c;">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Timetable -->
+    <div class="col-md-7">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white fw-bold border-bottom py-3 d-flex justify-content-between align-items-center">
+                <span><i class="fa-solid fa-calendar-days me-2 text-primary" style="color:#6a1b9a !important;"></i>Thời Khóa Biểu Của Tôi</span>
+                <a asp-page="/Student/MyTimetable" class="btn btn-sm" style="background:#6a1b9a; color:#fff;">Xem đầy đủ</a>
+            </div>
+            <div class="card-body p-0">
+                @if (Model.MyTimetables.Any())
+                {
+                    <div class="list-group list-group-flush">
+                        @foreach (var t in Model.MyTimetables.Take(6))
+                        {
+                            <div class="list-group-item d-flex align-items-center gap-3 py-3">
+                                <div class="timetable-day-badge">Thứ @t.DayOfWeek<br/>Tiết @t.Period</div>
+                                <div>
+                                    <div class="fw-semibold">@t.Subject?.Name</div>
+                                    <small class="text-muted"><i class="fa-solid fa-chalkboard-user me-1"></i>@t.Teacher?.FullName</small>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center text-muted py-4">
+                        <i class="fa-solid fa-calendar-xmark fa-2x mb-2 d-block"></i>
+                        Chưa có thời khóa biểu.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Grades -->
+    <div class="col-md-5">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white fw-bold border-bottom py-3 d-flex justify-content-between align-items-center">
+                <span><i class="fa-solid fa-star me-2" style="color:#f57f17;"></i>Điểm Gần Nhất</span>
+                <a asp-page="/Student/MyGrades" class="btn btn-sm" style="background:#6a1b9a; color:#fff;">Xem tất cả</a>
+            </div>
+            <div class="card-body p-0">
+                @if (Model.MyGrades.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Môn</th>
+                                    <th>HK</th>
+                                    <th>Cuối kỳ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var g in Model.MyGrades)
+                                {
+                                    <tr>
+                                        <td class="fw-semibold">@g.Subject?.Name</td>
+                                        <td>@g.Semester</td>
+                                        <td>
+                                            @if (g.FinalScore.HasValue)
+                                            {
+                                                var score = g.FinalScore.Value;
+                                                var cls = score >= 8 ? "success" : score >= 6.5 ? "warning" : "danger";
+                                                <span class="badge bg-@cls-subtle text-@cls border border-@cls-subtle fw-bold">@score</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">—</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center text-muted py-4">
+                        <i class="fa-solid fa-clipboard fa-2x mb-2 d-block"></i>
+                        Chưa có điểm nào.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

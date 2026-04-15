@@ -1,0 +1,189 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Trang chủ - Bảng điều khiển";
+}
+
+<style>
+    .welcome-banner {
+        background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+        color: white;
+        border-radius: 0.75rem;
+        padding: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+    .welcome-banner::after {
+        content: '\f19d'; /* FontAwesome Graduation Cap */
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        position: absolute;
+        right: -20px;
+        bottom: -40px;
+        font-size: 15rem;
+        opacity: 0.1;
+        transform: rotate(-15deg);
+    }
+    .stat-card {
+        border: none;
+        border-radius: 0.75rem;
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    }
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.2);
+    }
+    .border-left-primary { border-left: 0.25rem solid #4e73df !important; }
+    .border-left-success { border-left: 0.25rem solid #1cc88a !important; }
+    .border-left-warning { border-left: 0.25rem solid #f6c23e !important; }
+    
+    .icon-circle {
+        height: 3rem;
+        width: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 100%;
+        font-size: 1.25rem;
+    }
+    .bg-primary-light { background-color: rgba(78, 115, 223, 0.1); color: #4e73df; }
+    .bg-success-light { background-color: rgba(28, 200, 138, 0.1); color: #1cc88a; }
+    .bg-warning-light { background-color: rgba(246, 194, 62, 0.1); color: #f6c23e; }
+</style>
+
+<div class="container-fluid px-0">
+    <!-- Welcome Banner Section -->
+    <div class="welcome-banner mb-5">
+        <h1 class="display-5 fw-bold mb-3">Xin chào, @Model.Username! <span class="fs-2">👋</span></h1>
+        <p class="lead mb-0 fw-light" style="max-width: 600px;">
+            Chào mừng bạn trở lại Hệ thống Quản lý Trường Học. Dưới đây là tóm tắt nhanh về các chỉ số hoạt động trong năm biểu hiện tại cơ sở.
+        </p>
+    </div>
+
+    <!-- Statistics Cards Row -->
+    <div class="row g-4 mb-5">
+        <!-- Students Card -->
+        <div class="col-xl-4 col-md-6">
+            <div class="card stat-card border-left-primary h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center mb-1">
+                        <div class="col">
+                            <div class="text-xs fw-bold text-primary text-uppercase mb-1" style="font-size: 0.8rem; letter-spacing: 0.05em;">
+                                Tổng Học Sinh Đang Theo Học</div>
+                            <div class="h2 mb-0 fw-bold text-gray-800">@Model.TotalStudents</div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon-circle bg-primary-light h2 mb-0">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-muted small">
+                        <i class="fa-solid fa-arrow-trend-up text-success me-1"></i>
+                        <span>Thông số cập nhật theo thời gian thực</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teachers Card -->
+        <div class="col-xl-4 col-md-6">
+            <div class="card stat-card border-left-success h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center mb-1">
+                        <div class="col">
+                            <div class="text-xs fw-bold text-success text-uppercase mb-1" style="font-size: 0.8rem; letter-spacing: 0.05em;">
+                                Giáo Viên & Cán Bộ Giảng Dạy</div>
+                            <div class="h2 mb-0 fw-bold text-gray-800">@Model.TotalTeachers</div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon-circle bg-success-light h2 mb-0">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="mt-2 text-muted small">
+                        <i class="fa-solid fa-clipboard-user border-success me-1"></i>
+                        <span>Đội ngũ chuyên môn cao</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Classes Card -->
+        <div class="col-xl-4 col-md-6">
+            <div class="card stat-card border-left-warning h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center mb-1">
+                        <div class="col">
+                            <div class="text-xs fw-bold text-warning text-uppercase mb-1" style="font-size: 0.8rem; letter-spacing: 0.05em;">
+                                Số Lượng Lớp Học</div>
+                            <div class="h2 mb-0 fw-bold text-gray-800">@Model.TotalClasses</div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon-circle bg-warning-light h2 mb-0">
+                                <i class="fa-solid fa-school"></i>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="mt-2 text-muted small">
+                        <i class="fa-solid fa-person-chalkboard me-1"></i>
+                        <span>Ghi nhận đầy đủ tại cơ sở</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions / Navigation Module -->
+    <h3 class="h4 mb-4 text-gray-800 fw-bold border-bottom pb-2">Truy cập nhanh</h3>
+    <div class="row g-4">
+        <div class="col-lg-3 col-sm-6">
+             <a asp-page="/Students/Create" class="text-decoration-none">
+                <div class="card bg-white border-0 shadow-sm h-100 py-3 text-center stat-card interaction-link">
+                    <div class="card-body">
+                        <i class="fa-solid fa-user-plus fa-2x text-primary mb-3"></i>
+                        <h5 class="card-title fw-bold text-dark">Tiếp nhận Học sinh</h5>
+                        <p class="card-text text-muted small">Thêm mới học sinh vào cơ sở dữ liệu hệ thống.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+             <a asp-page="/Timetables/Index" class="text-decoration-none">
+                <div class="card bg-white border-0 shadow-sm h-100 py-3 text-center stat-card interaction-link">
+                    <div class="card-body">
+                        <i class="fa-solid fa-calendar-days fa-2x text-info mb-3"></i>
+                        <h5 class="card-title fw-bold text-dark">Lịch giảng dạy</h5>
+                        <p class="card-text text-muted small">Xem và tùy chỉnh thời khóa biểu các lớp.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+             <a asp-page="/Grades/Index" class="text-decoration-none">
+                <div class="card bg-white border-0 shadow-sm h-100 py-3 text-center stat-card interaction-link">
+                    <div class="card-body">
+                        <i class="fa-solid fa-file-signature fa-2x text-success mb-3"></i>
+                        <h5 class="card-title fw-bold text-dark">Sổ điểm điện tử</h5>
+                        <p class="card-text text-muted small">Cập nhật và tra cứu điểm các học kỳ.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6">
+             <a asp-page="/Classes/Index" class="text-decoration-none">
+                <div class="card bg-white border-0 shadow-sm h-100 py-3 text-center stat-card interaction-link">
+                    <div class="card-body">
+                        <i class="fa-solid fa-users-rectangle fa-2x text-warning mb-3"></i>
+                        <h5 class="card-title fw-bold text-dark">Phân công chủ nhiệm</h5>
+                        <p class="card-text text-muted small">Định dạng và thiết lập giáo viên chủ nhiệm.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+

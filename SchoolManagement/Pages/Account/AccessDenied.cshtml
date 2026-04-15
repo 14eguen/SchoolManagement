@@ -1,0 +1,24 @@
+@page
+@model SchoolManagement.Pages.Account.AccessDeniedModel
+
+@{
+    ViewData["Title"] = "Từ chối truy cập";
+}
+
+<div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 60vh;">
+    <div class="text-center">
+        <div class="mb-4" style="font-size: 5rem; color: #dc3545;">
+            <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h1 class="display-5 fw-bold text-danger mb-2">403 - Từ Chối Truy Cập</h1>
+        <p class="text-muted fs-5 mb-4">Bạn không có đủ quyền để truy cập trang này.<br>Vui lòng liên hệ quản trị viên nếu bạn cho rằng đây là nhầm lẫn.</p>
+        <div class="d-flex gap-3 justify-content-center">
+            <a asp-page="/Index" class="btn btn-primary px-4">
+                <i class="fa-solid fa-house me-2"></i>Về Trang Chủ
+            </a>
+            <a asp-page="/Account/Logout" class="btn btn-outline-secondary px-4">
+                <i class="fa-solid fa-right-from-bracket me-2"></i>Đăng Xuất
+            </a>
+        </div>
+    </div>
+</div>

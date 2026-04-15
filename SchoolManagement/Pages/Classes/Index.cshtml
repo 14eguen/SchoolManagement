@@ -1,0 +1,93 @@
+@page
+@model SchoolManagement.Pages_Classes.IndexModel
+
+@{
+    ViewData["Title"] = "Quản lý Lớp học";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-school me-2 text-primary"></i>Danh sách Lớp học</h2>
+    <a asp-page="Create" class="btn btn-primary shadow-sm"><i class="fa-solid fa-plus me-1"></i>Thêm Mới</a>
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-white py-3 d-flex flex-row align-items-center justify-content-between">
+        <form method="get" class="d-flex w-50">
+            <div class="input-group">
+                <input asp-for="SearchString" class="form-control" placeholder="Tìm kiếm theo Tên lớp..." aria-label="Search" />
+                <button class="btn btn-outline-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </form>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Tên Lớp</th>
+                        <th>Năm học</th>
+                        <th>Giáo viên chủ nhiệm</th>
+                        <th class="text-end">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Classes != null && Model.Classes.Any())
+                    {
+                        foreach (var item in Model.Classes)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td>@Html.DisplayFor(modelItem => item.AcademicYear)</td>
+                                <td>
+                                    @if(item.HomeroomTeacher != null)
+                                    {
+                                        <span class="badge border border-info text-dark"><i class="fa-solid fa-chalkboard-user me-1 text-info"></i>@item.HomeroomTeacher.FullName</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">Chưa phân công</span>
+                                    }
+                                </td>
+                                <td class="text-end">
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <a asp-page="./Edit" asp-route-id="@item.Id" class="btn btn-outline-primary" title="Sửa"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <a asp-page="./Details" asp-route-id="@item.Id" class="btn btn-outline-secondary" title="Chi tiết"><i class="fa-solid fa-eye"></i></a>
+                                        <a asp-page="./Delete" asp-route-id="@item.Id" class="btn btn-outline-danger" title="Xóa"><i class="fa-solid fa-trash-can"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-4">Không tìm thấy dữ liệu.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (Model.TotalPages > 1)
+        {
+            <div class="pagination-container mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm justify-content-end mb-0">
+                        <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" asp-page="./Index" asp-route-currentPage="@(Model.CurrentPage - 1)" asp-route-SearchString="@Model.SearchString">Trước</a>
+                        </li>
+                        @for (int i = 1; i <= Model.TotalPages; i++)
+                        {
+                            <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                                <a class="page-link" asp-page="./Index" asp-route-currentPage="@i" asp-route-SearchString="@Model.SearchString">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
+                            <a class="page-link" asp-page="./Index" asp-route-currentPage="@(Model.CurrentPage + 1)" asp-route-SearchString="@Model.SearchString">Sau</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        }
+    </div>
+</div>

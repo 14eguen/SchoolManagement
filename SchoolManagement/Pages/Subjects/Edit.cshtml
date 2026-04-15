@@ -1,0 +1,44 @@
+@page
+@model SchoolManagement.Pages_Subjects.EditModel
+
+@{
+    ViewData["Title"] = "Chỉnh sửa Môn học";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-pen-to-square me-2 text-primary"></i>Chỉnh Sửa Môn Học</h2>
+    <a asp-page="Index" class="btn btn-outline-secondary shadow-sm"><i class="fa-solid fa-arrow-left me-1"></i>Trở về</a>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="Subject.Id" />
+                    
+                    <div class="mb-3">
+                        <label asp-for="Subject.Name" class="form-label fw-bold">Tên Môn Học <span class="text-danger">*</span></label>
+                        <input asp-for="Subject.Name" class="form-control" />
+                        <span asp-validation-for="Subject.Name" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label asp-for="Subject.Coefficient" class="form-label fw-bold">Hệ Số</label>
+                        <input asp-for="Subject.Coefficient" class="form-control" type="number" min="1" max="10" />
+                        <span asp-validation-for="Subject.Coefficient" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="submit" class="btn btn-primary px-4"><i class="fa-solid fa-floppy-disk me-2"></i>Lưu thay đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

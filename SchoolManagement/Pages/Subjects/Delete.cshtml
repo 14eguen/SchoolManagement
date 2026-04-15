@@ -1,0 +1,39 @@
+@page
+@model SchoolManagement.Pages_Subjects.DeleteModel
+
+@{
+    ViewData["Title"] = "Xóa Môn học";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-trash-can me-2 text-danger"></i>Xóa Môn Học</h2>
+    <a asp-page="Index" class="btn btn-outline-secondary shadow-sm"><i class="fa-solid fa-arrow-left me-1"></i>Trở về</a>
+</div>
+
+<div class="alert alert-danger shadow-sm d-flex align-items-center mb-4" role="alert">
+    <i class="fa-solid fa-triangle-exclamation fs-3 me-3"></i>
+    <div>
+        <h4 class="alert-heading fw-bold mb-1">Cảnh báo!</h4>
+        <p class="mb-0">Bạn có chắc chắn muốn xóa môn học này không? Hành động này không thể hoàn tác.</p>
+    </div>
+</div>
+
+<div class="card shadow-sm border-danger">
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-sm-3 text-muted">Tên Môn Học</dt>
+            <dd class="col-sm-9 fw-bold fs-5 text-dark">@Html.DisplayFor(model => model.Subject.Name)</dd>
+
+            <dt class="col-sm-3 text-muted mt-3">Hệ Số</dt>
+            <dd class="col-sm-9 fw-semibold mt-3">@Html.DisplayFor(model => model.Subject.Coefficient)</dd>
+        </dl>
+        
+        <hr class="my-4">
+        
+        <form method="post" class="d-flex justify-content-end">
+            <input type="hidden" asp-for="Subject.Id" />
+            <a asp-page="./Index" class="btn btn-secondary me-2">Hủy Bỏ</a>
+            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash-can me-2"></i>Xóa Dữ Liệu</button>
+        </form>
+    </div>
+</div>

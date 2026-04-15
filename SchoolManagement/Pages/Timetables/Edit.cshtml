@@ -1,0 +1,90 @@
+@page
+@model SchoolManagement.Pages_Timetables.EditModel
+
+@{
+    ViewData["Title"] = "Chỉnh sửa Thời khóa biểu";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 mb-0 text-gray-800"><i class="fa-solid fa-pen-to-square me-2 text-primary"></i>Chỉnh Sửa Thời Khóa Biểu</h2>
+    <a asp-page="Index" class="btn btn-outline-secondary shadow-sm"><i class="fa-solid fa-arrow-left me-1"></i>Trở về</a>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="Timetable.Id" />
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Timetable.Semester" class="form-label fw-bold">Học Kỳ <span class="text-danger">*</span></label>
+                            <select asp-for="Timetable.Semester" class="form-select">
+                                <option value="1">Học kỳ 1</option>
+                                <option value="2">Học kỳ 2</option>
+                            </select>
+                            <span asp-validation-for="Timetable.Semester" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Timetable.ClassId" class="form-label fw-bold">Lớp Học <span class="text-danger">*</span></label>
+                            <select asp-for="Timetable.ClassId" class="form-select" asp-items="ViewBag.ClassId">
+                                <option value="">-- Chọn Lớp Học --</option>
+                            </select>
+                            <span asp-validation-for="Timetable.ClassId" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Timetable.SubjectId" class="form-label fw-bold">Môn Học <span class="text-danger">*</span></label>
+                            <select asp-for="Timetable.SubjectId" class="form-select" asp-items="ViewBag.SubjectId">
+                                <option value="">-- Chọn Môn Học --</option>
+                            </select>
+                            <span asp-validation-for="Timetable.SubjectId" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Timetable.TeacherId" class="form-label fw-bold">Giáo Viên <span class="text-danger">*</span></label>
+                            <select asp-for="Timetable.TeacherId" class="form-select" asp-items="ViewBag.TeacherId">
+                                <option value="">-- Chọn Giáo Viên --</option>
+                            </select>
+                            <span asp-validation-for="Timetable.TeacherId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label asp-for="Timetable.DayOfWeek" class="form-label fw-bold">Thứ <span class="text-danger">*</span></label>
+                            <select asp-for="Timetable.DayOfWeek" class="form-select">
+                                <option value="2">Thứ 2</option>
+                                <option value="3">Thứ 3</option>
+                                <option value="4">Thứ 4</option>
+                                <option value="5">Thứ 5</option>
+                                <option value="6">Thứ 6</option>
+                                <option value="7">Thứ 7</option>
+                            </select>
+                            <span asp-validation-for="Timetable.DayOfWeek" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-4">
+                            <label asp-for="Timetable.Period" class="form-label fw-bold">Tiết Học (1-10) <span class="text-danger">*</span></label>
+                            <input asp-for="Timetable.Period" class="form-control" type="number" min="1" max="10" />
+                            <span asp-validation-for="Timetable.Period" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="submit" class="btn btn-primary px-4"><i class="fa-solid fa-floppy-disk me-2"></i>Lưu Dữ Liệu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

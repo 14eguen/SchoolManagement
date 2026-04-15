@@ -1,0 +1,54 @@
+@page
+@model SchoolManagement.Pages.Student.MyGradesModel
+@{ ViewData["Title"] = "Kết Quả Học Tập"; }
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="h3 mb-0"><i class="fa-solid fa-chart-line me-2" style="color:#6a1b9a;"></i>Kết Quả Học Tập — @Model.StudentFullName</h2>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Môn Học</th>
+                        <th>Học Kỳ</th>
+                        <th>Miệng</th>
+                        <th>15 Phút</th>
+                        <th>45 Phút</th>
+                        <th>Cuối Kỳ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Grades.Any())
+                    {
+                        @foreach (var g in Model.Grades)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@g.Subject?.Name</td>
+                                <td>HK @g.Semester</td>
+                                <td>@(g.OralScore?.ToString("0.#") ?? "—")</td>
+                                <td>@(g.FifteenMinScore?.ToString("0.#") ?? "—")</td>
+                                <td>@(g.FortyFiveMinScore?.ToString("0.#") ?? "—")</td>
+                                <td>
+                                    @if (g.FinalScore.HasValue)
+                                    {
+                                        var score = g.FinalScore.Value;
+                                        var cls = score >= 8 ? "success" : score >= 6.5 ? "warning" : "danger";
+                                        <span class="badge bg-@cls-subtle text-@cls border border-@cls-subtle fw-bold fs-6">@score.ToString("0.#")</span>
+                                    }
+                                    else { <span class="text-muted">—</span> }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="6" class="text-center text-muted py-4">Chưa có điểm nào được nhập.</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
